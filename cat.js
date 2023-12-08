@@ -1,3 +1,5 @@
+
+
 class Cat {
   constructor({ name, pattern, size, description }) {
     this.name = name;
@@ -6,5 +8,6 @@ class Cat {
     this.description = description;
   }
 }
+
 
 module.exports = Cat;

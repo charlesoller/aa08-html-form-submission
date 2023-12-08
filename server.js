@@ -85,15 +85,19 @@ const server = http.createServer((req, res) => {
     return;
   }
 
+  
+
   let reqBody = "";
   req.on("data", (data) => {
+    // console.log('data',data)
     reqBody += data;
   });
-
+  // console.log('test3', reqBody)
   // When the request is finished processing the entire body
   req.on("end", () => {
     // Parsing the body of the request
     if (reqBody) {
+      // console.log('test2', reqBody)
       req.body = reqBody
         .split("&")
         .map((keyValuePair) => keyValuePair.split("="))
@@ -103,10 +107,43 @@ const server = http.createServer((req, res) => {
           acc[key] = value;
           return acc;
         }, {});
-      console.log(req.body);
+      // console.log('test'reqBody);
+      // console.log('test', req.body)
+
+    }
+   
+    // Your code here 
+    if(req.method === 'POST' && req.url.startsWith('/cat')) {
+      // console.log("test")
+      console.log(req.body)
+      cat = {
+        name: req.body.name,
+        pattern: req.body.pattern,
+        size: req.body.size,
+        description: req.body.description
+      }
+
+      res.statusCode = 302;
+      res.setHeader('Location', '/')
+      res.end()
+      return
     }
 
-    // Your code here 
+    if(req.method === 'POST' && req.url.startsWith('/dog')) {
+      // console.log("test")
+      console.log(req.body)
+      cat = {
+        name: req.body.name,
+        pattern: req.body.pattern,
+        size: req.body.size,
+        description: req.body.description
+      }
+
+      res.statusCode = 302;
+      res.setHeader('Location', '/')
+      res.end()
+      return
+    }
 
     res.statusCode = 404;
     res.end("Page Not Found");
